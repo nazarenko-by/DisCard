@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">DisCard</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_QR">QR</string>
+
+    <!-- Preference Titles -->
+    <string name="text_header">Text</string>
+    <string name="lang_header">Sync</string>
+
+    <!-- Text Preferences -->
+    <string name="textSize_title">Text size</string>
+    <string name="lang_title">Language</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+
+
+    <!-- Language Preferences -->
+    <string name="lang_summary">Changes accepted</string>
+    <string name="lang_dialog">Choose language</string>
+
+    <!-- Text Size Preferences -->
+    <string name="textSize_summary">Changes accepted</string>
+    <string name="textSize_dialog">Choose size</string>
+
+    <!-- Exit dialog -->
+    <string name="exitDialog_tittle">Want to exit?</string>
+    <string name="exitDialog_yes">Yes</string>
+    <string name="exitDialog_no">No</string>
+
+    </resources>
