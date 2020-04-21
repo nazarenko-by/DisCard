@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DisCard</string>
-    <string name="action_settings">Налаштування</string>
-    <string name="title_activity_settings">Налаштування</string>
     <string name="title_activity_QR">QR</string>
-
-    <!-- Preference Titles -->
-    <string name="text_header">Текст</string>
-    <string name="lang_header">Sync</string>
-
-    <!-- Text Preferences -->
-    <string name="textSize_title">Розмір тексту</string>
-    <string name="lang_title">Мова</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-
-
-    <!-- Language Preferences -->
-    <string name="lang_summary">Зміни прийняті</string>
-    <string name="lang_dialog">Виберіть мову</string>
-
-    <!-- Text Size Preferences -->
-    <string name="textSize_summary">Зміни прийняті</string>
-    <string name="textSize_dialog">Виберіть розмір</string>
+    <string name="camera_error">Під час виклику камери, вона зачинеться</string>
 
     <!-- Exit dialog -->
     <string name="exitDialog_tittle">Бажаєте вийти?</string>
     <string name="exitDialog_yes">Так</string>
     <string name="exitDialog_no">Ні</string>
+
+    <!-- Name dialog -->
+    <string name="nameTittle">Назва</string>
+    <string name="nameMessage">Ведіть назву карти</string>
+    <string name="enter">Вести</string>
+    <string name="Cancel">Відміна</string>
+
+    <!-- Delete dialog -->
+    <string name="delete">Видалити</string>
+    <string name="delete_message">Ви хочете видалити обране?</string>
+
+    <!-- Open dialog -->
+    <string name="open">Відкрити</string>
+    <string name="open_message">Ви хочете відкрити обраний штрихкод?</string>
 
     </resources>

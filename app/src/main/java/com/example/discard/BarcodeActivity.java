@@ -1,18 +1,17 @@
 package com.example.discard;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -27,13 +26,11 @@ public class BarcodeActivity extends Activity {
         private CameraPreview mPreview;
         private Handler autoFocusHandler;
 
-        TextView scanText;
-        Button scanButton;
-
         ImageScanner scanner;
 
         private boolean barcodeScanned = false;
         private boolean previewing = true;
+        private String name;
 
         public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +41,6 @@ public class BarcodeActivity extends Activity {
 
         autoFocusHandler = new Handler();
         mCamera = getCameraInstance();
-
         /* Instance barcode scanner */
         scanner = new ImageScanner();
         scanner.setConfig(0, Config.X_DENSITY, 3);
@@ -53,23 +49,9 @@ public class BarcodeActivity extends Activity {
         mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
         FrameLayout preview = (FrameLayout)findViewById(R.id.cameraPreview);
         preview.addView(mPreview);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("BACODENAME");
 
-        scanText = (TextView)findViewById(R.id.scanText);
-
-        scanButton = (Button)findViewById(R.id.ScanButton);
-
-        scanButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (barcodeScanned) {
-                    barcodeScanned = false;
-                    scanText.setText("Scanning...");
-                    mCamera.setPreviewCallback(previewCb);
-                    mCamera.startPreview();
-                    previewing = true;
-                    mCamera.autoFocus(autoFocusCB);
-                }
-            }
-        });
     }
 
         public void onPause() {
@@ -113,24 +95,34 @@ public class BarcodeActivity extends Activity {
 
                 int result = scanner.scanImage(barcode);
 
+
                 if (result != 0) {
+                    DatabaseHelper databaseHelper;
+                    SQLiteDatabase db;
+                    databaseHelper = new DatabaseHelper(getApplicationContext());
+                    db = databaseHelper.getReadableDatabase();
+                    ContentValues cv = new ContentValues();
                     previewing = false;
                     mCamera.setPreviewCallback(null);
                     mCamera.stopPreview();
-
+                    String s;
                     SymbolSet syms = scanner.getResults();
                     for (Symbol sym : syms) {
-                        scanText.setText("barcode result " + sym.getData());
+                        cv.put(DatabaseHelper.COLUMN_BC, sym.getData());
+                        cv.put(DatabaseHelper.COLUMN_NM, name);
+                        cv.put(DatabaseHelper.COLUMN_TP, sym.getType());
                         barcodeScanned = true;
                     }
+                    db.insert(DatabaseHelper.TABLE, null, cv);
+                    db.close();
+                    finish();
                 }
             }
         };
 
-        // Mimic continuous auto-focusing
         AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
             public void onAutoFocus(boolean success, Camera camera) {
-                autoFocusHandler.postDelayed(doAutoFocus, 1000);
+                autoFocusHandler.postDelayed(doAutoFocus, 500);
             }
         };
 }
