@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DisCard</string>
+    <string name="app_name">BarCard</string>
     <string name="title_activity_QR">QR</string>
     <string name="camera_error">When you call the camera, it closes</string>
 

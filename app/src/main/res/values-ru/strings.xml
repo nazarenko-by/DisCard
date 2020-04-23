@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DisCard</string>
+    <string name="app_name">BarCard</string>
     <string name="title_activity_QR">QR</string>
     <string name="camera_error">При вызове камеры, она закроется</string>
 
