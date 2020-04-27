@@ -2,6 +2,7 @@
     <string name="app_name">BarCard</string>
     <string name="title_activity_QR">QR</string>
     <string name="camera_error">When you call the camera, it closes</string>
+    <string name="camera_massage">Hover over a barcode</string>
 
     <!-- Exit dialog -->
     <string name="exitDialog_tittle">Want to exit?</string>

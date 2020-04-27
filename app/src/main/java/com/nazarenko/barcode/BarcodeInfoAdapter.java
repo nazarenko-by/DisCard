@@ -35,6 +35,7 @@ public class BarcodeInfoAdapter extends ArrayAdapter<BarcodeInfo> {
         AsyncBarcodeGenerator asyncQRGenerator = new AsyncBarcodeGenerator();
         asyncQRGenerator.setType(barcodeInfo.getType());
         bitmap = asyncQRGenerator.createBarcode(barcodeInfo.getImage());
+        if(bitmap != null)
         barcodeView.setImageBitmap(bitmap);
 
         return view;

@@ -3,6 +3,7 @@
     <string name="app_name">BarCard</string>
     <string name="title_activity_QR">QR</string>
     <string name="camera_error">При вызове камеры, она закроется</string>
+    <string name="camera_massage">Наведите на штрих-код</string>
 
     <!-- Exit dialog -->
     <string name="exitDialog_tittle">Хотите выйти?</string>

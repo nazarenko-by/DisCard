@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BarcodView"></activity>
+        <activity android:name=".BarcodView" android:screenOrientation = "portrait"></activity>
         <activity android:name=".BarcodeActivity" />
         <activity
             android:name=".MainActivity"

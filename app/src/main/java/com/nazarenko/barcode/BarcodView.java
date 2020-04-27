@@ -1,6 +1,7 @@
 package com.nazarenko.barcode;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ public class BarcodView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcod_view);
+
         Intent intent = getIntent();
         int type = intent.getIntExtra("TYPE",13);
         String img = intent.getStringExtra("IMAGE");

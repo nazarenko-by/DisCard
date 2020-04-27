@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int item) {
 
                         if (options[item].equals(getResources().getString(R.string.delete))) {
-                            db.delete(DatabaseHelper.TABLE, DatabaseHelper.COLUMN_BC + " = "
-                                    + "\'" + adapter.getItem(position).getImage() +"\'" , null);
+                            db.delete(DatabaseHelper.TABLE, DatabaseHelper.COLUMN_ID + " = "
+                                    + adapter.getItem(position).getID(), null);
                             setInitialData();
                             adapter = new BarcodeInfoAdapter(getApplicationContext(), R.layout.list_item, barcodeInfoList);
                             listView.setAdapter(adapter);
@@ -135,10 +135,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setInitialData() {
         db = databaseHelper.getReadableDatabase();
-        Cursor userCursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE + ";", null);
+        Cursor userCursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE + " ORDER BY "
+                + DatabaseHelper.COLUMN_NM + " ASC;", null);
         if (userCursor.moveToFirst()) {
             for (int i = 0; i < userCursor.getCount(); i++) {
-                barcodeInfoList.add(new BarcodeInfo (userCursor.getString(1),userCursor.getString(2),
+                barcodeInfoList.add(new BarcodeInfo (userCursor.getInt(0), userCursor.getString(1),userCursor.getString(2),
                         userCursor.getInt(3)));
                 userCursor.moveToNext();
             }

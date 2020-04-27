@@ -12,6 +12,8 @@ import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -39,6 +41,8 @@ public class BarcodeActivity extends Activity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.camera_massage), Toast.LENGTH_LONG).show();
+
         autoFocusHandler = new Handler();
         mCamera = getCameraInstance();
         /* Instance barcode scanner */
@@ -49,6 +53,10 @@ public class BarcodeActivity extends Activity {
         mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
         FrameLayout preview = (FrameLayout)findViewById(R.id.cameraPreview);
         preview.addView(mPreview);
+        ImageView v = new ImageView(this);
+        v.setScaleType(ImageView.ScaleType.CENTER);
+        v.setImageResource(R.drawable.ic_focus);
+        preview.addView(v);
         Intent intent = getIntent();
         name = intent.getStringExtra("BACODENAME");
 

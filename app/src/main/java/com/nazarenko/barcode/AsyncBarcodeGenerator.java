@@ -11,11 +11,13 @@ import com.google.zxing.oned.Code39Writer;
 import com.google.zxing.oned.EAN13Writer;
 import com.google.zxing.oned.EAN8Writer;
 
+import net.sourceforge.zbar.Symbol;
+
 import java.util.Hashtable;
 
 public class AsyncBarcodeGenerator {
 
-    private static final int WIDTH = 300;
+    private static final int WIDTH = 400;
     private static final int HEIGHT = 100;
     private static final int BLACK = 0xFF000000;
     private static final int WHITE = 0xFFF;
@@ -31,7 +33,7 @@ public class AsyncBarcodeGenerator {
         BitMatrix matrix = null;
         Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-        if (type == 8){
+        if (type == Symbol.EAN8){
             try {
                 matrix = new EAN8Writer().encode(
                         params,
@@ -40,7 +42,7 @@ public class AsyncBarcodeGenerator {
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-        }else if(type == 13) {
+        }else if(type == Symbol.EAN13) {
             try {
                 matrix = new EAN13Writer().encode(
                         params,
@@ -49,7 +51,7 @@ public class AsyncBarcodeGenerator {
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-        } else if(type == 128){
+        } else if(type == Symbol.CODE128){
             try {
                 matrix = new Code128Writer().encode(
                         params,
@@ -58,7 +60,7 @@ public class AsyncBarcodeGenerator {
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-        }else if(type == 39){
+        }else if(type == Symbol.CODE39){
             try {
                 matrix = new Code39Writer().encode(
                         params,
@@ -67,6 +69,54 @@ public class AsyncBarcodeGenerator {
             } catch (WriterException e) {
                 e.printStackTrace();
             }
+        } else if(type == Symbol.CODE93){
+            try {
+                matrix = new Code39Writer().encode(
+                        params,
+                        BarcodeFormat.CODE_93,
+                        WIDTH, HEIGHT, hints);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }else if(type == Symbol.CODABAR){
+            try {
+                matrix = new Code39Writer().encode(
+                        params,
+                        BarcodeFormat.CODABAR,
+                        WIDTH, HEIGHT, hints);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }else if(type == Symbol.PDF417){
+            try {
+                matrix = new Code39Writer().encode(
+                        params,
+                        BarcodeFormat.PDF_417,
+                        WIDTH, HEIGHT, hints);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }else if(type == Symbol.UPCA){
+            try {
+                matrix = new Code39Writer().encode(
+                        params,
+                        BarcodeFormat.UPC_A,
+                        WIDTH, HEIGHT, hints);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }else if(type == Symbol.UPCE){
+            try {
+                matrix = new Code39Writer().encode(
+                        params,
+                        BarcodeFormat.UPC_E,
+                        WIDTH, HEIGHT, hints);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }else {
+            bitmap = null;
+            return bitmap;
         }
             bitmap = matrixToBitmap(matrix);
 
