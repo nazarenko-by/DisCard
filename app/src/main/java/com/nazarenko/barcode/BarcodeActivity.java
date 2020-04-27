@@ -11,6 +11,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 
+import java.security.Policy;
+
 
 public class BarcodeActivity extends Activity {
 
@@ -28,9 +31,10 @@ public class BarcodeActivity extends Activity {
         private CameraPreview mPreview;
         private Handler autoFocusHandler;
 
+
         ImageScanner scanner;
 
-        private boolean barcodeScanned = false;
+        private boolean LightOn = false;
         private boolean previewing = true;
         private String name;
 
@@ -51,6 +55,7 @@ public class BarcodeActivity extends Activity {
         scanner.setConfig(0, Config.Y_DENSITY, 3);
 
         mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
+        mCamera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         FrameLayout preview = (FrameLayout)findViewById(R.id.cameraPreview);
         preview.addView(mPreview);
         ImageView v = new ImageView(this);
@@ -62,8 +67,23 @@ public class BarcodeActivity extends Activity {
 
     }
 
-        public void onPause() {
-        super.onPause();
+    public void lightClick(View view){
+        Camera.Parameters parameters =  mCamera.getParameters();
+            if(!LightOn){
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                mCamera.setParameters(parameters);
+                mCamera.startPreview();
+                LightOn = true;
+            } else {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                mCamera.setParameters(parameters);
+                mCamera.startPreview();
+                LightOn = false;
+            }
+    }
+
+    public void onPause() {
+            super.onPause();
         releaseCamera();
     }
 
@@ -118,7 +138,6 @@ public class BarcodeActivity extends Activity {
                         cv.put(DatabaseHelper.COLUMN_BC, sym.getData());
                         cv.put(DatabaseHelper.COLUMN_NM, name);
                         cv.put(DatabaseHelper.COLUMN_TP, sym.getType());
-                        barcodeScanned = true;
                     }
                     db.insert(DatabaseHelper.TABLE, null, cv);
                     db.close();
